@@ -1,3 +1,20 @@
+# Bugsnag Paperpile fork
+
+This is a fork of [bugsnag-js](https://github.com/bugsnag/bugsnag-js) needed for the `desktop` project.
+
+It contains prebuilt Electron binaries for Mac and Windows (created by [prebuild](https://github.com/prebuild/prebuild)). It uses [prebuild-install](https://github.com/prebuild/prebuild-install) so `electron-builder` can automatically pick up the prebuilt binaries. Thanks to that, we can build for both platforms from a Mac.
+
+- To start the project, follow the [Development quick start](#development-quick-start).
+- To add a package, use `lerna`, e.g add `nan` to two sub-packages:
+```
+npx lerna add nan --scope @bugsnag/plugin-electron-app --scope @bugsnag/plugin-electron-client-state-persistence
+```
+- To build native packages, do this and then commit to git:
+```
+cd ./packages/plugin-electron-app && npm run prebuild && cd -
+cd ./packages/plugin-electron-client-state-persistence && npm run prebuild && cd -
+```
+
 # Bugsnag error monitoring & reporting for JavaScript
 
 Automatically detect JavaScript errors in the browser, Node.js, React Native and Expo, with plugins for React, Vue, Angular, Express, Restify and Koa. Get cross-platform error detection for handled and unhandled errors with real-time error alerts and detailed diagnostic reports.

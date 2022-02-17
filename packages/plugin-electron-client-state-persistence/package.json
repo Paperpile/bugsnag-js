@@ -6,14 +6,17 @@
   "homepage": "https://www.bugsnag.com/",
   "repository": {
     "type": "git",
-    "url": "git@github.com:bugsnag/bugsnag-js.git"
+    "url": "https://github.com/Paperpile/bugsnag-js.git"
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "build": "node-gyp configure build",
-    "generate-compile-commands": "node-gyp configure --release -- -f gyp.generator.compile_commands_json.py; mv Release/compile_commands.json .; rm -rf Debug Release"
+    "generate-compile-commands": "node-gyp configure --release -- -f gyp.generator.compile_commands_json.py; mv Release/compile_commands.json .; rm -rf Debug Release",
+    "install": "prebuild-install --runtime electron || node-gyp rebuild",
+    "rebuild": "node-gyp rebuild",
+    "prebuild": "prebuild --target 15.3.0 --runtime electron --verbose && mv prebuilds/@bugsnag/* prebuilds && rm -r prebuilds/@bugsnag"
   },
   "author": "Bugsnag",
   "license": "MIT",
@@ -36,12 +39,15 @@
     "src/deps/tinycthread/tinycthread.h"
   ],
   "dependencies": {
-    "bindings": "^1.5.0"
+    "bindings": "^1.5.0",
+    "nan": "^2.15.0",
+    "prebuild-install": "^7.0.1"
   },
   "devDependencies": {
     "@bugsnag/core": "^7.16.1",
     "@bugsnag/plugin-electron-client-state-manager": "^7.16.1",
-    "@types/bindings": "^1.5.0"
+    "@types/bindings": "^1.5.0",
+    "prebuild": "^11.0.3"
   },
   "peerDependencies": {
     "@bugsnag/core": "^7.9.2"
