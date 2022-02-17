@@ -2,11 +2,26 @@
 
 This is a fork of [bugsnag-js](https://github.com/bugsnag/bugsnag-js) needed for the `desktop` project.
 
+- It contains prebuilt Electron binaries for Mac and Windows (created by [prebuild](https://github.com/prebuild/prebuild)). It uses [prebuild-install](https://github.com/prebuild/prebuild-install) so `electron-builder` can automatically pick up the prebuilt binaries. Thanks to that, we can build for both platforms from a Mac.
 - It serializes our custom errors, when sending them from the renderer process through IPC. That way we can log more info, such as `error.cause`.
 
 ## Quick start
 - To start the project, follow the [Development quick start](#development-quick-start).
-> Warning: `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install` might be needed to prevent errors from Playwright.
+> Warning: `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install` might be needed on Mac to prevent errors from Playwright.
+- To add a package, use npm workspaces, e.g add `nan` to two sub-packages:
+```
+npm install nan -w @bugsnag/plugin-electron-app -w @bugsnag/plugin-electron-client-state-persistence
+```
+- To build native packages, do this and then commit to git:
+```
+cd ./packages/plugin-electron-app && npm run prebuild && cd -
+cd ./packages/plugin-electron-client-state-persistence && npm run prebuild && cd -
+```
+- Optionally, build also for `x64` via `prebuild:x64`.
+```
+cd ./packages/plugin-electron-app && npm run prebuild:x64 && cd -
+cd ./packages/plugin-electron-client-state-persistence && npm run prebuild:x64 && cd -
+```
 
 <div align="center">
   <a href="https://www.bugsnag.com/platforms/javascript">
