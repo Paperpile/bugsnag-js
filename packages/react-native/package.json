@@ -66,7 +66,6 @@
     "iserror": "^0.0.2"
   },
   "scripts": {
-    "prepare": "bash prepare-android-vendor.sh",
     "test:types": "tsc -p tsconfig.json"
   },
   "codegenConfig": {
