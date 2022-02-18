@@ -6,36 +6,46 @@ const NetworkStatus = require('@bugsnag/electron-network-status')
 
 const delivery = (client, filestore, net, app) => {
   const send = (opts, body, cb) => {
-    const errorHandler = err => {
-      err.isRetryable = true
-      cb(err)
-    }
+    const sendPromise = new Promise((resolve, reject) => {
+      const req = net.request(opts)
 
-    const req = net.request(opts, response => {
-      req.removeListener('error', errorHandler)
-      if (isOk(response)) {
-        cb(null)
-      } else {
-        const err = new Error(`Bad status code from API: ${response.statusCode}`)
-        err.isRetryable = isRetryable(response.statusCode)
-        cb(err)
+      req.on('error', err => {
+        err.isRetryable = true
+        reject(err)
+      })
+
+      req.on('response', response => {
+        // to prevent uncaught ERR_TUNNEL_CONNECTION_FAILED error in case proxy login fails
+        // https://github.com/electron/electron/issues/24948
+        response.on('error', err => {
+          client._logger.error(`API response error: ${err}`)
+          reject(err)
+        })
+
+        if (isOk(response)) {
+          resolve(null)
+        } else {
+          const err = new Error(`Bad status code from API: ${response.statusCode}`)
+          err.isRetryable = isRetryable(response.statusCode)
+          reject(err)
+        }
+      })
+
+      try {
+        req.write(body)
+      } catch (err) {
+        // if we can't write this body to the request, it's likely impossible to
+        // ever send it successfully
+        err.isRetryable = false
+
+        reject(err)
+        return
       }
+
+      req.end()
     })
 
-    req.on('error', errorHandler)
-
-    try {
-      req.write(body)
-    } catch (err) {
-      // if we can't write this body to the request, it's likely impossible to
-      // ever send it successfully
-      err.isRetryable = false
-
-      cb(err)
-      return
-    }
-
-    req.end()
+    sendPromise.then(cb).catch(cb)
   }
 
   const logError = e => client._logger.error('Error delivering payload', e)
