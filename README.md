@@ -1,3 +1,13 @@
+# Bugsnag Paperpile fork
+
+This is a fork of [bugsnag-js](https://github.com/bugsnag/bugsnag-js) needed for the `desktop` project.
+
+- It serializes our custom errors, when sending them from the renderer process through IPC. That way we can log more info, such as `error.cause`.
+
+## Quick start
+- To start the project, follow the [Development quick start](#development-quick-start).
+> Warning: `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install` might be needed to prevent errors from Playwright.
+
 <div align="center">
   <a href="https://www.bugsnag.com/platforms/javascript">
     <picture>
