@@ -53,11 +53,14 @@ module.exports = (rendererOpts) => {
       // include the stack in the originalError if it's an Error; the default
       // serialisation only includes 'name' and 'message'
       if (payloadEvent.originalError instanceof Error) {
-        event.originalError = {
-          name: payloadEvent.originalError.name,
-          message: payloadEvent.originalError.message,
-          stack: payloadEvent.originalError.stack
-        }
+        event.originalError =
+          'toJSON' in payloadEvent.originalError
+            ? payloadEvent.originalError.toJSON()
+            : {
+              name: payloadEvent.originalError.name,
+              message: payloadEvent.originalError.message,
+              stack: payloadEvent.originalError.stack
+            }
       }
 
       window.__bugsnag_ipc__.dispatch(event)

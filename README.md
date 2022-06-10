@@ -2,10 +2,11 @@
 
 This is a fork of [bugsnag-js](https://github.com/bugsnag/bugsnag-js) needed for the `desktop` project.
 
-It contains prebuilt Electron binaries for Mac and Windows (created by [prebuild](https://github.com/prebuild/prebuild)). It uses [prebuild-install](https://github.com/prebuild/prebuild-install) so `electron-builder` can automatically pick up the prebuilt binaries. Thanks to that, we can build for both platforms from a Mac.
+- It contains prebuilt Electron binaries for Mac and Windows (created by [prebuild](https://github.com/prebuild/prebuild)). It uses [prebuild-install](https://github.com/prebuild/prebuild-install) so `electron-builder` can automatically pick up the prebuilt binaries. Thanks to that, we can build for both platforms from a Mac.
+- It fixes `ERR_TUNNEL_CONNECTION_FAILED` uncaught error, happening when using a proxy that requires credentials but the credentials are incorrect or not set in the OS. The uncaught error led to showing the "Unexpected error" modal in `desktop`.
+- It serializes our custom errors, when sending them from the renderer process through IPC. That way we can log more info, such as `error.cause`.
 
-It also fixes `ERR_TUNNEL_CONNECTION_FAILED` uncaught error, happening when using a proxy that requires credentials but the credentials are incorrect or not set in the OS. The uncaught error led to showing the "Unexpected error" modal in `desktop`.
-
+## Quick start
 - To start the project, follow the [Development quick start](#development-quick-start).
 - To add a package, use `lerna`, e.g add `nan` to two sub-packages:
 ```
