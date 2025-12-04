@@ -4,10 +4,13 @@ This is a fork of [bugsnag-js](https://github.com/bugsnag/bugsnag-js) needed for
 
 - It contains prebuilt Electron binaries for Mac and Windows (created by [prebuild](https://github.com/prebuild/prebuild)). It uses [prebuild-install](https://github.com/prebuild/prebuild-install) so `electron-builder` can automatically pick up the prebuilt binaries. Thanks to that, we can build for both platforms from a Mac.
 - It serializes our custom errors, when sending them from the renderer process through IPC. That way we can log more info, such as `error.cause`.
+- It has a script to build tarballs for each subpackage we need.
 
 ## Quick start
+> ⚠️ To make fixes, new binaries or tgz files, always work on the `desktop` branch. The main branch should be kept in sync with upstream.
+
 - To start the project, follow the [Development quick start](#development-quick-start).
-> Warning: `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install` might be needed on Mac to prevent errors from Playwright.
+> ℹ️ `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm install` might be needed on Mac to prevent errors from Playwright.
 - To add a package, use npm workspaces, e.g add `nan` to two sub-packages:
 ```
 npm install nan -w @bugsnag/plugin-electron-app -w @bugsnag/plugin-electron-client-state-persistence
@@ -22,6 +25,7 @@ cd ./packages/plugin-electron-client-state-persistence && npm run prebuild && cd
 cd ./packages/plugin-electron-app && npm run prebuild:x64 && cd -
 cd ./packages/plugin-electron-client-state-persistence && npm run prebuild:x64 && cd -
 ```
+- Finally, to build `.tgz` packages, use `./buildPackages.sh`. This creates a tarball of each package we need, and we can then reference them in our `desktop` project. This is because `bugsnag-js` is a monorepo with subpackages, and `yarn` doesn't allow referencing subpackages directly.
 
 <div align="center">
   <a href="https://www.bugsnag.com/platforms/javascript">

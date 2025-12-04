@@ -18,7 +18,8 @@
     "src/get_version-mac.m",
     "src/get_version-linux.c",
     "src/get_version-win.c",
-    "app.js"
+    "app.js",
+    "prebuilds/"
   ],
   "scripts": {
     "build": "node-gyp configure build",

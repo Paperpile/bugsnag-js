@@ -37,7 +37,8 @@
     "src/deps/tinycthread/README.txt",
     "src/deps/tinycthread/package.json",
     "src/deps/tinycthread/tinycthread.c",
-    "src/deps/tinycthread/tinycthread.h"
+    "src/deps/tinycthread/tinycthread.h",
+    "prebuilds/"
   ],
   "dependencies": {
     "bindings": "^1.5.0",

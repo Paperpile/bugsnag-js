@@ -9,7 +9,6 @@ dist
 maze_output
 *.ngsummary.json
 .diff
-*.tgz
 min_packages.tar
 .verdaccio
 .cucumber-failures
