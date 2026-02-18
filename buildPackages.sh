@@ -48,7 +48,8 @@ TAG="desktop-v$MAIN_PACKAGE_VERSION"
 EXISTING_TAGS=$(git tag -l "$TAG*")
 # tag already exists, append -1, -2, -3...
 if [ -n "$EXISTING_TAGS" ]; then
-  EXISTING_SUFFIXES=$(echo "$EXISTING_TAGS" | sed "s/^$TAG-//" | sort -n)
+  # Filter to only suffixed tags (e.g. desktop-v8.5.0-1), extract the numeric suffix
+  EXISTING_SUFFIXES=$(echo "$EXISTING_TAGS" | grep "^${TAG}-" | sed "s/^${TAG}-//" | sort -n || true)
 
   if [ -z "$EXISTING_SUFFIXES" ]; then
       NEXT_SUFFIX=1

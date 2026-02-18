@@ -450,6 +450,16 @@ void *tss_get(tss_t key);
 */
 int tss_set(tss_t key, void *val);
 
+/* Detect if the system provides C11 threads natively (glibc 2.40+).
+   If so, once_flag and call_once are already declared via system headers,
+   so skip our polyfill definitions to avoid conflicts. */
+#if !defined(__STDC_NO_THREADS__) && defined(__has_include)
+  #if __has_include(<threads.h>)
+    #define _TTHREAD_HAS_C11_THREADS_
+  #endif
+#endif
+
+#ifndef _TTHREAD_HAS_C11_THREADS_
 #if defined(_TTHREAD_WIN32_)
   typedef struct {
     LONG volatile status;
@@ -460,17 +470,20 @@ int tss_set(tss_t key, void *val);
   #define once_flag pthread_once_t
   #define ONCE_FLAG_INIT PTHREAD_ONCE_INIT
 #endif
+#endif /* !_TTHREAD_HAS_C11_THREADS_ */
 
 /** Invoke a callback exactly once
  * @param flag Flag used to ensure the callback is invoked exactly
  *        once.
  * @param func Callback to invoke.
  */
+#ifndef _TTHREAD_HAS_C11_THREADS_
 #if defined(_TTHREAD_WIN32_)
   void call_once(once_flag *flag, void (*func)(void));
 #else
   #define call_once(flag,func) pthread_once(flag,func)
 #endif
+#endif /* !_TTHREAD_HAS_C11_THREADS_ */
 
 #ifdef __cplusplus
 }
