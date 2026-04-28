@@ -453,7 +453,7 @@ int tss_set(tss_t key, void *val);
 /* Detect if the system provides C11 threads natively (glibc 2.40+).
    If so, once_flag and call_once are already declared via system headers,
    so skip our polyfill definitions to avoid conflicts. */
-#if !defined(__STDC_NO_THREADS__) && defined(__has_include)
+#if !defined(__STDC_NO_THREADS__) && defined(__has_include) && !defined(_TTHREAD_WIN32_)
   #if __has_include(<threads.h>)
     #define _TTHREAD_HAS_C11_THREADS_
   #endif
