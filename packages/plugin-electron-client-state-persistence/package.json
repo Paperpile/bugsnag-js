@@ -16,8 +16,8 @@
     "generate-compile-commands": "node-gyp configure --release -- -f gyp.generator.compile_commands_json.py; mv Release/compile_commands.json .; rm -rf Debug Release",
     "install": "prebuild-install --runtime electron || node-gyp rebuild",
     "rebuild": "node-gyp rebuild",
-    "prebuild": "prebuild --target 37.2.5 --runtime electron --verbose && mv prebuilds/@bugsnag/* prebuilds && rm -r prebuilds/@bugsnag",
-    "prebuild:x64": "prebuild --target 37.2.5 --runtime electron --arch x64 --verbose && mv prebuilds/@bugsnag/* prebuilds && rm -r prebuilds/@bugsnag"
+    "prebuild": "prebuild --target 41.3.0 --runtime electron --verbose && mv prebuilds/@bugsnag/* prebuilds && rm -r prebuilds/@bugsnag",
+    "prebuild:x64": "prebuild --target 41.3.0 --runtime electron --arch x64 --verbose && mv prebuilds/@bugsnag/* prebuilds && rm -r prebuilds/@bugsnag"
   },
   "author": "Bugsnag",
   "license": "MIT",
