@@ -32,11 +32,11 @@
   "devDependencies": {
     "@bugsnag/core": "^8.4.0",
     "@bugsnag/electron-test-helpers": "^8.4.0",
+    "nan": "^2.23.0",
     "prebuild": "^13.0.1"
   },
   "dependencies": {
     "bindings": "^1.5.0",
-    "nan": "^2.23.0",
     "prebuild-install": "^7.1.3"
   },
   "peerDependencies": {

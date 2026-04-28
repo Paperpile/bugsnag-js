@@ -42,7 +42,6 @@
   ],
   "dependencies": {
     "bindings": "^1.5.0",
-    "nan": "^2.23.0",
     "prebuild-install": "^7.1.3"
   },
   "devDependencies": {
@@ -50,6 +49,7 @@
     "@bugsnag/electron-test-helpers": "^8.4.0",
     "@bugsnag/plugin-electron-client-state-manager": "^8.4.0",
     "@types/bindings": "^1.5.0",
+    "nan": "^2.23.0",
     "prebuild": "^13.0.1"
   },
   "peerDependencies": {
